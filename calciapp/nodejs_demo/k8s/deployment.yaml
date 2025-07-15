@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calci-deployment
+  namespace: calci
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: calci
+  template:
+    metadata:
+      labels:
+        app: calci
+    spec:
+      containers:
+        - name: calci
+          # This will be patched by the GH Action:
+          image: prajwalbk1999/prajwalbk1999:calci
+          ports:
+            - containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 20

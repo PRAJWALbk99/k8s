@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: calci-svc
+  namespace: calci
+spec:
+  type: LoadBalancer
+  selector:
+    app: calci
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
